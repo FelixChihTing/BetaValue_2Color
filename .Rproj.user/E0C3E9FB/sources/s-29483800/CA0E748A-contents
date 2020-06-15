@@ -1,0 +1,28 @@
+## set up working directory
+setwd("~/FelixRproj/BetaTCP")
+
+## acquire data form excel
+dat <- read.table("BetaData.txt", header = TRUE)
+
+## plot the relative difference-QE relation
+plot(0,0, xlim=c(0,1), ylim=c(0,0.6), col="white", xlab = 'QE', ylab = 'Relative Difference', main ='Effect of QE')
+
+# show only the results from Hamamatsu
+points(dat$QE[dat$Camera =="hamamatsu"],dat$Perc.Difference[dat$Camera == "hamamatsu"], col = 'green', pch = 1, cex =1.5, lwd=2)
+# show only the results from PCO when its IR mode is on
+points(dat$QE[dat$Camera =="pco" & dat$Mode == "on"],dat$Perc.Difference[dat$Camera == "pco" & dat$Mode == "on"], col = 'red', pch = 1, cex =1.5, lwd=2)
+# show only the results from PCO when its IR mode is off
+points(dat$QE[dat$Camera =="pco" & dat$Mode == "off"],dat$Perc.Difference[dat$Camera == "pco" & dat$Mode == "off"], col = 'blue', pch = 1, cex =1.5, lwd=2)
+# show legend
+legend("topleft", inset = 0.01, c("Hamamatsu","PCO IR:on","PCO IR:off"),col=c('green','red','orange'),cex=c(1.5,1.5,1.5), pch =c(1,1,1),lwd= c(2,2,2))
+# connect points between lines for specific cases
+points(dat$QE[dat$Camera =="hamamatsu" & dat$Expos.Time.ms ==50],dat$Perc.Difference[dat$Camera =="hamamatsu" & dat$Expos.Time.ms ==50],type ="l")
+
+## plot the relative difference-Lambda
+plot(0,0, xlim=c(500,800), ylim=c(0,0.6), col="white", xlab = 'Lambda (nm)', ylab = 'Relative Difference', main ='Effect of Lambda')
+points(dat$Lambda.nm[dat$Camera =="hamamatsu"],dat$Perc.Difference[dat$Camera =="hamamatsu"], col = 'green', pch = 1, cex = 1.5, lwd =2)
+points(dat$Lambda.nm[dat$Camera =="pco" & dat$Mode == "on"],dat$Perc.Difference[dat$Camera =="pco" & dat$Mode == "on"], col = 'red', pch = 1, cex =1.5, lwd=2)
+points(dat$Lambda.nm[dat$Camera =="pco" & dat$Mode == "off"],dat$Perc.Difference[dat$Camera =="pco" & dat$Mode == "off"], col = 'blue', pch = 1, cex =1.5, lwd=2)
+
+
+
